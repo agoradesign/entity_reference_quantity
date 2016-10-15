@@ -38,20 +38,12 @@ class EntityReferenceQuantitySelect extends OptionsWidgetBase
     );
 
     $widget['target_id'] = $element;
-    $widget['field'] = array(
-      '#type' => 'text',
-      '#default_value' => isset($items[$delta]) ? $items[$delta]->field : '',
-      '#size' => '10',
-    );
-    $widget['specialization'] = array(
-      '#type' => 'text',
-      '#default_value' => isset($items[$delta]) ? $items[$delta]->specialization : '',
-      '#size' => '10',
-    );
-    $widget['points'] = array(
+    $widget['quantity'] = array(
       '#type' => 'number',
-      '#default_value' => isset($items[$delta]) ? $items[$delta]->points : '',
       '#size' => '4',
+      '#default_value' => isset($items[$delta]) ? $items[$delta]->quantity : 1,
+      '#placeholder' => $this->fieldDefinition->getSetting('qty_placeholder'),
+      '#weight' => 10,
     );
 
     return $widget;

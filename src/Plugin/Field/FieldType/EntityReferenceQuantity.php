@@ -3,9 +3,9 @@
 namespace Drupal\entity_reference_quantity\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'entity_reference_quantity' field type.
@@ -27,7 +27,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = parent::propertyDefinitions($field_definition);
     $quantity_definition = DataDefinition::create('integer')
-      ->setLabel(new TranslatableMarkup('Quantity'))
+      ->setLabel($field_definition->getSetting('qty_placeholder'))
       ->setRequired(TRUE);
     $properties['quantity'] = $quantity_definition;
     return $properties;
@@ -40,11 +40,65 @@ class EntityReferenceQuantity extends EntityReferenceItem {
     $schema = parent::schema($field_definition);
     $schema['columns']['quantity'] = array(
       'type' => 'int',
-      'not null' => TRUE,
       'default' => 1,
       'unsigned' => FALSE,
     );
 
     return $schema;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultFieldSettings() {
+    return array(
+      'qty_placeholder' => t('Quantity'),
+      'qty_min' => 0,
+      'qty_max' => 100,
+    ) + parent::defaultFieldSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
+    $elements = parent::fieldSettingsForm($form, $form_state);
+
+    $elements['quantity'] = array(
+      '#type' => 'details',
+      '#title' => t('Quantity settings'),
+      '#open' => TRUE,
+      '#tree' => FALSE,
+    );
+
+    $elements['quantity']['qty_min'] = [
+      '#type' => 'number',
+      '#title' => t('Minimum'),
+      '#default_value' => $this->getSetting('qty_min'),
+    ];
+    $elements['quantity']['qty_max'] = [
+      '#type' => 'number',
+      '#title' => t('Maximum'),
+      '#default_value' => $this->getSetting('qty_max'),
+    ];
+    $elements['quantity']['qty_placeholder'] = [
+      '#type' => 'textfield',
+      '#title' => t('Quantity Label'),
+      '#default_value' => $this->getSetting('qty_placeholder'),
+      '#description' => t('Also used as a placeholder in multi-value instances.')
+    ];
+
+    return $elements;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getPreconfiguredOptions() {
+    // In the base EntityReference class, this is used to populate the
+    // list of field-types with options for each destination entity type.
+    // Too much work, we'll just make people fill that out later.
+    // Also, keeps the field type dropdown from getting too cluttered.
+    return array();
   }
 }

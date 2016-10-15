@@ -7,10 +7,10 @@
 
 ## Version 1
 - [ ] Separate Views display of reference and quantity 
-- [ ] Show title for quantity field in widget
-- [ ] Configurable title for quantity field
-- [ ] Configurable min/max quantity field
+- [x] Show title for quantity field in widget
+- [x] Configurable title for quantity field
+- [x] Configurable min/max quantity field
 
 ## Wishlist
 - [ ] Entity browser support
-- [ ] Full entity render formatter 
+- [ ] Full entity render formatter (Wait, what would this even do?)

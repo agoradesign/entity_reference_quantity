@@ -28,7 +28,7 @@ class EntityReferenceQuantityAutocomplete extends EntityReferenceAutocompleteWid
       '#type' => 'number',
       '#size' => '4',
       '#default_value' => isset($items[$delta]) ? $items[$delta]->quantity : 1,
-      '#placeholder' => 1,
+      '#placeholder' => $this->fieldDefinition->getSetting('qty_placeholder'),
       '#weight' => 10,
     );
 
