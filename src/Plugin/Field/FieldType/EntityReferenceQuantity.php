@@ -27,7 +27,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = parent::propertyDefinitions($field_definition);
     $quantity_definition = DataDefinition::create('integer')
-      ->setLabel($field_definition->getSetting('qty_placeholder'))
+      ->setLabel($field_definition->getSetting('qty_label'))
       ->setRequired(TRUE);
     $properties['quantity'] = $quantity_definition;
     return $properties;
@@ -52,7 +52,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
    */
   public static function defaultFieldSettings() {
     return array(
-      'qty_placeholder' => t('Quantity'),
+      'qty_label' => t('Quantity'),
       'qty_min' => 0,
       'qty_max' => 100,
     ) + parent::defaultFieldSettings();
@@ -81,10 +81,10 @@ class EntityReferenceQuantity extends EntityReferenceItem {
       '#title' => t('Maximum'),
       '#default_value' => $this->getSetting('qty_max'),
     ];
-    $elements['quantity']['qty_placeholder'] = [
+    $elements['quantity']['qty_label'] = [
       '#type' => 'textfield',
       '#title' => t('Quantity Label'),
-      '#default_value' => $this->getSetting('qty_placeholder'),
+      '#default_value' => $this->getSetting('qty_label'),
       '#description' => t('Also used as a placeholder in multi-value instances.')
     ];
 

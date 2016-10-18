@@ -33,7 +33,7 @@ class EntityReferenceQuantitySelect extends OptionsWidgetBase
     );
 
     $widget = array(
-      '#attributes' => ['class' => ['form--inline']],
+      '#attributes' => ['class' => ['form--inline', 'clearfix']],
       '#theme_wrappers' => ['container'],
     );
 
@@ -42,9 +42,15 @@ class EntityReferenceQuantitySelect extends OptionsWidgetBase
       '#type' => 'number',
       '#size' => '4',
       '#default_value' => isset($items[$delta]) ? $items[$delta]->quantity : 1,
-      '#placeholder' => $this->fieldDefinition->getSetting('qty_placeholder'),
       '#weight' => 10,
     );
+
+    if ($this->fieldDefinition->getFieldStorageDefinition()->isMultiple()) {
+      $widget['quantity']['#placeholder'] = $this->fieldDefinition->getSetting('qty_label');
+    }
+    else {
+      $widget['quantity']['#title'] = $this->fieldDefinition->getSetting('qty_label');
+    }
 
     return $widget;
   }

@@ -20,7 +20,7 @@ class EntityReferenceQuantityAutocomplete extends EntityReferenceAutocompleteWid
 
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $widget = array(
-      '#attributes' => ['class' => ['form--inline']],
+      '#attributes' => ['class' => ['form--inline', 'clearfix']],
       '#theme_wrappers' => ['container'],
     );
     $widget['target_id'] = parent::formElement($items, $delta, $element, $form, $form_state);
@@ -28,9 +28,15 @@ class EntityReferenceQuantityAutocomplete extends EntityReferenceAutocompleteWid
       '#type' => 'number',
       '#size' => '4',
       '#default_value' => isset($items[$delta]) ? $items[$delta]->quantity : 1,
-      '#placeholder' => $this->fieldDefinition->getSetting('qty_placeholder'),
       '#weight' => 10,
     );
+
+    if ($this->fieldDefinition->getFieldStorageDefinition()->isMultiple()) {
+      $widget['quantity']['#placeholder'] = $this->fieldDefinition->getSetting('qty_label');
+    }
+    else {
+      $widget['quantity']['#title'] = $this->fieldDefinition->getSetting('qty_label');
+    }
 
     return $widget;
   }
