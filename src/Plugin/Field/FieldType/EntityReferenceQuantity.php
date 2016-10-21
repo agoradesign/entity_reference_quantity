@@ -64,24 +64,17 @@ class EntityReferenceQuantity extends EntityReferenceItem {
   public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::fieldSettingsForm($form, $form_state);
 
-    $elements['quantity'] = array(
-      '#type' => 'details',
-      '#title' => t('Quantity settings'),
-      '#open' => TRUE,
-      '#tree' => FALSE,
-    );
-
-    $elements['quantity']['qty_min'] = [
+    $elements['qty_min'] = [
       '#type' => 'number',
       '#title' => t('Minimum'),
       '#default_value' => $this->getSetting('qty_min'),
     ];
-    $elements['quantity']['qty_max'] = [
+    $elements['qty_max'] = [
       '#type' => 'number',
       '#title' => t('Maximum'),
       '#default_value' => $this->getSetting('qty_max'),
     ];
-    $elements['quantity']['qty_label'] = [
+    $elements['qty_label'] = [
       '#type' => 'textfield',
       '#title' => t('Quantity Label'),
       '#default_value' => $this->getSetting('qty_label'),
