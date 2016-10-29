@@ -27,8 +27,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = parent::propertyDefinitions($field_definition);
     $quantity_definition = DataDefinition::create('integer')
-      ->setLabel($field_definition->getSetting('qty_label'))
-      ->setRequired(TRUE);
+      ->setLabel($field_definition->getSetting('qty_label'));
     $properties['quantity'] = $quantity_definition;
     return $properties;
   }
