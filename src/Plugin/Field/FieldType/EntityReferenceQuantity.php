@@ -39,8 +39,6 @@ class EntityReferenceQuantity extends EntityReferenceItem {
     $schema = parent::schema($field_definition);
     $schema['columns']['quantity'] = array(
       'type' => 'int',
-      'default' => 1,
-      'unsigned' => FALSE,
     );
 
     return $schema;
@@ -53,7 +51,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
     return array(
       'qty_label' => t('Quantity'),
       'qty_min' => 0,
-      'qty_max' => 100,
+      'qty_max' => 999,
     ) + parent::defaultFieldSettings();
   }
 
