@@ -52,6 +52,8 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
       case 'suffix':
         $action = t('suffix after title');
         break;
+      case default:
+        $action = t('suffix after title');
     }
     $summary[] = t('Show quantity as @action', array('@action' => $action));
 
