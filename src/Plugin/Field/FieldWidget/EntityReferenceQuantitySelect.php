@@ -105,4 +105,16 @@ class EntityReferenceQuantitySelect extends OptionsWidgetBase
       $form_state->setValueForElement($element, $element['#value']);
     }
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    foreach ($values as $delta => $data) {
+      if (empty($data['quantity'])) {
+        unset($values[$delta]['quantity']);
+      }
+    }
+    return $values;
+  }
 }
