@@ -12,6 +12,9 @@ field.storage_settings.entity_reference_quantity:
 field.formatter.settings.entity_reference_quantity_label:
   type: field.formatter.settings.entity_reference_label
   mapping:
-    quantity_output:
+    location:
       label: 'Show quantity as'
+      type: string
+    template:
+      label: 'Output template'
       type: string
