@@ -45,6 +45,7 @@ class EntityReferenceQuantityAutocomplete extends EntityReferenceAutocompleteWid
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
+    $values = parent::massageFormValues($values, $form, $form_state);
     foreach ($values as $delta => $data) {
       if (empty($data['quantity'])) {
         unset($values[$delta]['quantity']);
