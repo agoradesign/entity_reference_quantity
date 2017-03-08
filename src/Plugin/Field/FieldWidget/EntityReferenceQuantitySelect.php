@@ -111,6 +111,9 @@ class EntityReferenceQuantitySelect extends OptionsWidgetBase
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $data) {
+      if (isset($data['element'])) {
+        $values[$delta] = $data['element'];
+      }
       if (empty($data['quantity'])) {
         unset($values[$delta]['quantity']);
       }
