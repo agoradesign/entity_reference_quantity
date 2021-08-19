@@ -90,7 +90,6 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
     $values = $items->getValue();
-    $twig = new \Twig_Environment();
 
     foreach ($elements as $delta => $entity) {
       if (!empty($values[$delta]['quantity'])) {
