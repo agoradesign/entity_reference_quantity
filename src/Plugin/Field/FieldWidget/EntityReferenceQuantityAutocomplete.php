@@ -18,18 +18,21 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\EntityReferenceAutocompleteWidget
  */
 class EntityReferenceQuantityAutocomplete extends EntityReferenceAutocompleteWidget {
 
+  /**
+   * {@inheritdoc}
+   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $widget = array(
+    $widget = [
       '#attributes' => ['class' => ['form--inline', 'clearfix']],
       '#theme_wrappers' => ['container'],
-    );
+    ];
     $widget['target_id'] = parent::formElement($items, $delta, $element, $form, $form_state);
-    $widget['quantity'] = array(
+    $widget['quantity'] = [
       '#type' => 'number',
       '#size' => '4',
       '#default_value' => isset($items[$delta]) ? $items[$delta]->quantity : 1,
       '#weight' => 10,
-    );
+    ];
 
     if ($this->fieldDefinition->getFieldStorageDefinition()->isMultiple()) {
       $widget['quantity']['#placeholder'] = $this->fieldDefinition->getSetting('qty_label');
@@ -53,4 +56,5 @@ class EntityReferenceQuantityAutocomplete extends EntityReferenceAutocompleteWid
     }
     return $values;
   }
+
 }

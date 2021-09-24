@@ -24,10 +24,10 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return array(
-        'location' => 'suffix',
-        'template' => ' ({{ quantity }})',
-      ) + parent::defaultSettings();
+    return [
+      'location' => 'suffix',
+      'template' => ' ({{ quantity }})',
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -35,7 +35,7 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
-    $elements['location'] = array(
+    $elements['location'] = [
       '#type' => 'radios',
       '#options' => [
         'pre-title' => t('Before the title'),
@@ -46,14 +46,14 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
       '#title' => t('Output location'),
       '#default_value' => $this->getSetting('location'),
       '#required' => TRUE,
-    );
-    $elements['template'] = array(
+    ];
+    $elements['template'] = [
       '#type' => 'textfield',
       '#title' => t('Output template'),
       '#default_value' => $this->getSetting('template'),
       '#description' => t('A simple Twig snippet that outputs the "quantity" variable.'),
       '#required' => TRUE,
-    );
+    ];
 
     return $elements;
   }
@@ -66,31 +66,37 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
 
     switch ($this->getSetting('location')) {
       case 'pre-title':
-        $location = t('before the title');
+        $location = $this->t('before the title');
         break;
+
       case 'post-title':
         $location = t('after the title');
         break;
+
       case 'suffix':
-        $location = t('as part of the suffix');
+        $location = $this->t('as part of the suffix');
         break;
+
       case 'attribute':
-        $location = t('in a data-* attribute');
+        $location = $this->t('in a data-* attribute');
         break;
+
       default:
-        $location = t('as part of the suffix');
+        $location = $this->t('as part of the suffix');
         break;
     }
-    $summary[] = t('Display @action', array('@action' => $location));
-    $summary[] = t('Display as: @template', array('@template' => $this->getSetting('template')));
+    $summary[] = $this->t('Display @action', ['@action' => $location]);
+    $summary[] = $this->t('Display as: @template', ['@template' => $this->getSetting('template')]);
 
     return $summary;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = parent::viewElements($items, $langcode);
     $values = $items->getValue();
-    $twig = new \Twig_Environment();
 
     foreach ($elements as $delta => $entity) {
       if (!empty($values[$delta]['quantity'])) {
@@ -102,12 +108,15 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
           case 'attribute':
             $elements[$delta]['#attributes']['data-quantity'] = $output;
             break;
+
           case 'pre-title':
             $elements[$delta]['#title'] .= $output;
             break;
+
           case 'post-title':
             $elements[$delta]['#title'] = $output . $elements[$delta]['#title'];
             break;
+
           case 'suffix':
             if (!isset($elements[$delta]['#suffix'])) {
               $elements[$delta]['#suffix'] = '';
@@ -120,4 +129,5 @@ class EntityReferenceQuantityLabelFormatter extends EntityReferenceLabelFormatte
 
     return $elements;
   }
+
 }

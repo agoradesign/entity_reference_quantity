@@ -37,9 +37,9 @@ class EntityReferenceQuantity extends EntityReferenceItem {
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     $schema = parent::schema($field_definition);
-    $schema['columns']['quantity'] = array(
+    $schema['columns']['quantity'] = [
       'type' => 'int',
-    );
+    ];
 
     return $schema;
   }
@@ -48,11 +48,11 @@ class EntityReferenceQuantity extends EntityReferenceItem {
    * {@inheritdoc}
    */
   public static function defaultFieldSettings() {
-    return array(
+    return [
       'qty_label' => t('Quantity'),
       'qty_min' => 0,
       'qty_max' => 999,
-    ) + parent::defaultFieldSettings();
+    ] + parent::defaultFieldSettings();
   }
 
   /**
@@ -75,7 +75,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
       '#type' => 'textfield',
       '#title' => t('Quantity Label'),
       '#default_value' => $this->getSetting('qty_label'),
-      '#description' => t('Also used as a placeholder in multi-value instances.')
+      '#description' => $this->t('Also used as a placeholder in multi-value instances.'),
     ];
 
     return $elements;
@@ -89,6 +89,7 @@ class EntityReferenceQuantity extends EntityReferenceItem {
     // list of field-types with options for each destination entity type.
     // Too much work, we'll just make people fill that out later.
     // Also, keeps the field type dropdown from getting too cluttered.
-    return array();
+    return [];
   }
+
 }
